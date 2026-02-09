@@ -761,7 +761,7 @@ packages:
     source: hosted
     version: "1.2.1"
   weather_app_ui_kit:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: "../weather_app_ui_kit"
       relative: true

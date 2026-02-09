@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/widgets/navigation/app_shell.dart';
 import 'package:weather_app_ui_kit/weather_app_ui_kit.dart';
 import 'package:weather_app/app_bloc_observer.dart';
 import 'package:weather_app/core/di/service_locator.dart';
 import 'package:weather_app/core/security/weather_app_monitor_service.dart';
 import 'package:weather_app/core/storage/hive_initialize.dart';
-import 'package:weather_app/features/weather_report/presentation/screen/weather_report_root_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +34,7 @@ class _WeatherAppState extends State<WeatherApp> {
     monitor.warningStream.listen((warning) {
       if (warning != null) {
         messengerKey.currentState?.showSnackBar(
-          SnackBar(content: Text(warning.message), duration: Duration(days: 1)),
+          SnackBar(content: Text(warning.message), duration: Duration(days: 1), behavior: SnackBarBehavior.floating,),
         );
       } else {
         messengerKey.currentState?.hideCurrentSnackBar();
@@ -48,7 +48,8 @@ class _WeatherAppState extends State<WeatherApp> {
       debugShowCheckedModeBanner: false,
       
       scaffoldMessengerKey: messengerKey,
-      home: AppTheme(tokens: lightThemeTokens, child: WeatherReportRootScreen()),
+      home: AppTheme(tokens: lightThemeTokens, child: AppShell()),
+      
     );
   }
 }

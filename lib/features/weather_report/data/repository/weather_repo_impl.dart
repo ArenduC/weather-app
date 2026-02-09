@@ -14,11 +14,10 @@ class WeatherRepoImpl implements WeatherRepository {
     try {
       final data = await weatherDatasources.fetchWeatherReport();
 
-      await weatherLocalDatasources.catchWeatherData(data);
 
       return data;
     } catch (e) {
-      final cached = weatherLocalDatasources.getWeather();
+      final cached = await weatherLocalDatasources.getWeather();
       if (cached != null) {
         return cached;
       } else {

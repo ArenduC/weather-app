@@ -41,6 +41,8 @@ dependencies:
   path: ^1.9.1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  weather_app_ui_kit:
+    path: ../weather_app_ui_kit
 
 
 
@@ -58,8 +60,7 @@ dev_dependencies:
   build_runner: ^2.4.13
   analyzer: 6.4.1
 
-  weather_app_ui_kit:
-    path: ../weather_app_ui_kit
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
