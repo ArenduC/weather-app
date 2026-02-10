@@ -48,7 +48,7 @@ class _WeatherAppState extends State<WeatherApp> {
       debugShowCheckedModeBanner: false,
       
       scaffoldMessengerKey: messengerKey,
-      home: AppTheme(tokens: lightThemeTokens, child: AppShell()),
+      home:const AppTheme(tokens: darkThemeTokens, child: AppShell()),
       
     );
   }

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/features/weather_map/presentation/screen/weather_map_view.dart';
 
-class WeatherMapScreen extends StatefulWidget {
+class WeatherMapScreen extends StatelessWidget {
   const WeatherMapScreen({super.key});
 
   @override
-  State<WeatherMapScreen> createState() => _WeatherMapScreenState();
-}
-
-class _WeatherMapScreenState extends State<WeatherMapScreen> {
-  @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Center(child: Text("Map Screen"),),);
+    return WeatherMapView();
   }
 }
