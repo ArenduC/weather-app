@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/core/widgets/app_background/app_background_widget.dart';
 import 'package:weather_app/features/settings/presentation/screen/settings_root_screen.dart';
-
-import 'package:weather_app/features/weather_map/presentation/screen/weather_map_screen.dart';
-
 import 'package:weather_app/features/weather_report/presentation/screen/weather_report_screen.dart';
 
 class AppShell extends StatefulWidget {
