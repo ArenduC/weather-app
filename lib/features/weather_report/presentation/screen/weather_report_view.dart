@@ -21,17 +21,34 @@ class _WeatherReportViewState extends State<WeatherReportView> {
   }
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return 
    SafeArea(
      child: CustomScrollView(
        slivers: <Widget>[ 
         SliverAppBar(
-          backgroundColor: AppTheme.of(context).primaryBackground,
+          pinned: true,
+          floating: false,
+          snap:false,
+          backgroundColor: Colors.transparent,
           expandedHeight: 200,
-           flexibleSpace: const FlexibleSpaceBar(
-                title: Text('SliverAppBar'),
-                background: FlutterLogo(),
-              ),
+           flexibleSpace:  LayoutBuilder(
+             builder: ( context, constraints) {
+
+              final isScroll = constraints.biggest.height <= kToolbarHeight + MediaQuery.of(context).padding.top;
+               return Container(
+                 decoration: BoxDecoration(
+                   color: isScroll ? theme.primaryBackground : Colors.transparent,
+                  
+                 ),
+                 child: FlexibleSpaceBar(
+                       
+                      title: Text('SliverAppBar', style: AppTypography.textTheme.bodyLarge!.copyWith(color: AppTheme.of(context).cardLabel)),
+                      background: FlutterLogo(),
+                    ),
+               );
+             }
+           ),
           
         ),
          BlocBuilder<WeatherBloc, WeatherState>(
@@ -45,6 +62,12 @@ class _WeatherReportViewState extends State<WeatherReportView> {
                 return SliverToBoxAdapter(
                   child: Column(children: [
                   
+                    MainWeatherCard(weatherDataModel: state.weatherReport.weatherData,),
+                    SizedBox(height: 5,),
+                    MainWeatherCard(weatherDataModel: state.weatherReport.weatherData,),
+                    SizedBox(height: 5,),
+                    MainWeatherCard(weatherDataModel: state.weatherReport.weatherData,),
+                    SizedBox(height: 5,),
                     MainWeatherCard(weatherDataModel: state.weatherReport.weatherData,)
                   
                   ],),

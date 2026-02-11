@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/widgets/navigation/app_shell.dart';
+import 'package:weather_app/features/settings/data/model/theme_state_model.dart';
+import 'package:weather_app/features/settings/presentation/cubit/app_settings_cubit.dart';
 import 'package:weather_app_ui_kit/weather_app_ui_kit.dart';
 import 'package:weather_app/app_bloc_observer.dart';
 import 'package:weather_app/core/di/service_locator.dart';
@@ -12,7 +14,14 @@ void main() async {
   Bloc.observer = AppBlocObserver();
   await setupLocator();
   await HiveInitialize.init();
-  runApp(WeatherApp());
+ runApp(
+
+ BlocProvider(
+      create: (_) => sl<AppSettingsCubit>()..loadSettings(),
+      child: const WeatherApp(),
+    )
+ );
+ 
 }
 
 class WeatherApp extends StatefulWidget {
@@ -44,12 +53,22 @@ class _WeatherAppState extends State<WeatherApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      
-      scaffoldMessengerKey: messengerKey,
-      home:const AppTheme(tokens: darkThemeTokens, child: AppShell()),
-      
-    );
+      return BlocBuilder<AppSettingsCubit, AppSettingsState>(
+    builder: (context, state) {
+
+      final themeState = state is AppSettingsLoaded
+          ? state.appSettingsModel.themeState
+          : ThemeState.dark;
+
+       return AppTheme(                     // ✅ Move here
+        tokens: themeState.tokens,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          scaffoldMessengerKey: messengerKey,
+          home: const AppShell(),
+        ),
+      );
+    },
+  );
   }
 }

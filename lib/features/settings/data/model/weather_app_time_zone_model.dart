@@ -1,0 +1,4 @@
+enum WeatherAppTimeZone {
+  ist,
+  utc,
+}

@@ -8,15 +8,27 @@ class MainWeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Use ui kit for theme
+    final theme = AppTheme.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-       crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
 
-      
       children: [
         Container(
-          margin: const EdgeInsets.all(70),
-          decoration: BoxDecoration(color: AppTheme.of(context).primaryAccent), child: Text(weatherDataModel!.weatherTime.toString())),
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 70),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(20),
+
+          child: GlassCard(
+            widget: Text(
+              weatherDataModel!.weatherTime.toString(),
+              style: AppTypography.textTheme.displayLarge!.copyWith(
+                color: theme.cardValue,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

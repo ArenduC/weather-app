@@ -10,20 +10,19 @@ import 'package:weather_app/features/weather_report/presentation/bloc/weather_bl
 final sl = GetIt.instance;
 
 Future<void> registerWeatherReport() async {
-  await Hive.initFlutter();
-
-  final weatherBox = await Hive.openBox<dynamic>('current');
-
-  //HIVE MODEL
-  sl.registerLazySingleton<Box<dynamic>>(() => weatherBox);
+  
 
   //DATASOURCE;
   sl.registerLazySingleton<WeatherDatasources>(
     () => WeatherDatasources(dio: DioClient(),weatherLocalDatasources: sl() ),
   );
+
+
   sl.registerLazySingleton<WeatherLocalDatasources>(
-    () => WeatherLocalDatasources(sl()),
-  );
+  () => WeatherLocalDatasources(
+    sl<Box<dynamic>>(instanceName: 'weatherBox'),
+  ),
+);
 
   //REPOSITORIES;
 

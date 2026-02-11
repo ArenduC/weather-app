@@ -6,6 +6,7 @@ class SettingsRootScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SettingsScreen();
+    return  const SettingsScreen();
+    
   }
 }
