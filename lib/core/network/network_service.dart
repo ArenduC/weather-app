@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+
 class NetworkService {
   final StreamController<bool> _controller = StreamController.broadcast();
 
@@ -12,14 +13,19 @@ class NetworkService {
     _startMonitoring();
   }
 
-  Future<bool> hasInternet() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
-    } catch (e) {
-      return false;
-    }
+ Future<bool> hasInternet() async {
+  try {
+    final client = HttpClient();
+    final request = await client.getUrl(
+      Uri.parse('https://example.com'),
+    ).timeout(const Duration(seconds: 3));
+
+    final response = await request.close();
+    return response.statusCode == 200;
+  } catch (_) {
+    return false;
   }
+}
 
   void _startMonitoring() {
     Timer.periodic(const Duration(seconds: 3), (timer) async {

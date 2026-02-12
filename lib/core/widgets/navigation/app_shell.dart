@@ -27,8 +27,10 @@ class _AppShellState extends State<AppShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
       body: AppBackgroundWidget(
         widget: PageView(
+         
           controller: _pageController,
           onPageChanged: (index) {
             setState(() {

@@ -16,16 +16,43 @@ class MainWeatherCard extends StatelessWidget {
 
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 70),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           alignment: Alignment.center,
           padding: const EdgeInsets.all(20),
 
           child: GlassCard(
-            widget: Text(
-              weatherDataModel!.weatherTime.toString(),
-              style: AppTypography.textTheme.displayLarge!.copyWith(
-                color: theme.cardValue,
-              ),
+            widget: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    GlassCard(
+                      color: theme.weatherHighlight.withOpacity(.1),
+                      borderRadius: 12,
+                      widget: Padding(
+                        padding: const EdgeInsets.all(1),
+                        child: Icon(Icons.device_thermostat, color: theme.weatherHighlight, size: 50,),
+                      )),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Clear Sky", style: AppTypography.textTheme.labelLarge!.copyWith(color: theme.cardValue),),
+                          Text(
+                            "20"
+                            "°C",
+                            style: AppTypography.textTheme.displayLarge!
+                                .copyWith(color: theme.cardValue),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),

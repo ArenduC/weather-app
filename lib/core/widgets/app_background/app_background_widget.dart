@@ -61,7 +61,7 @@ class AppBackgroundWidget extends StatelessWidget {
               sigmaX: 80,
               sigmaY: 80,
             ),
-            child: Container(color: const Color.fromARGB(134, 0, 0, 0)),
+            child: Container(color: const Color.fromARGB(0, 0, 0, 0)),
           ),
 
           widget
