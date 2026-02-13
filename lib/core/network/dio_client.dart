@@ -14,7 +14,7 @@ class DioClient{
     'content-type' :'application/json'
   }  )
 
- ) {dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true, request: true, error: true));}
+ ) {dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true, request: true, error: false));}
   
 }
 

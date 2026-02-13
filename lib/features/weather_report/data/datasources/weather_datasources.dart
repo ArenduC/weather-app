@@ -1,6 +1,7 @@
 
 import 'package:weather_app/core/network/api_endpoints.dart';
 import 'package:weather_app/core/network/dio_client.dart';
+import 'package:weather_app/core/network/helper/dio_error_handler.dart';
 import 'package:weather_app/features/weather_report/data/datasources/weather_local_datasources.dart';
 import 'package:weather_app/features/weather_report/data/model/weather_report_model.dart';
 
@@ -28,7 +29,7 @@ class WeatherDatasources {
          await weatherLocalDatasources.catchWeatherData(response.data);
         return  WeatherReportModel.fromJson(response.data) ;
       } catch (e) {
-        throw e.toString();
+        throw DioErrorHandler.handle(e);
       }
 
    }

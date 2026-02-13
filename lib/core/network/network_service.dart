@@ -1,40 +1,28 @@
 import 'dart:async';
-import 'dart:io';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class NetworkService {
-  final StreamController<bool> _controller = StreamController.broadcast();
+  final Connectivity _connectivity = Connectivity();
+  final StreamController<bool> _controller =
+      StreamController<bool>.broadcast();
 
   Stream<bool> get connectionStream => _controller.stream;
 
-  bool _lateStatus = true;
-
   NetworkService() {
-    _startMonitoring();
+    _init();
   }
 
- Future<bool> hasInternet() async {
-  try {
-    final client = HttpClient();
-    final request = await client.getUrl(
-      Uri.parse('https://example.com'),
-    ).timeout(const Duration(seconds: 3));
+  void _init() async {
+    // ✅ Emit initial state first
+    final initial = await _connectivity.checkConnectivity();
+    _controller.add(!initial.contains(ConnectivityResult.none));
 
-    final response = await request.close();
-    return response.statusCode == 200;
-  } catch (_) {
-    return false;
-  }
-}
+    // ✅ Then listen to changes
+    _connectivity.onConnectivityChanged.listen((results) {
+      final hasConnection =
+          !results.contains(ConnectivityResult.none);
 
-  void _startMonitoring() {
-    Timer.periodic(const Duration(seconds: 3), (timer) async {
-      final status = await hasInternet();
-
-      if (status != _lateStatus) {
-        _lateStatus = status;
-        _controller.add(status);
-      }
+      _controller.add(hasConnection);
     });
   }
 
@@ -42,3 +30,4 @@ class NetworkService {
     _controller.close();
   }
 }
+

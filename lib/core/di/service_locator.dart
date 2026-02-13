@@ -11,6 +11,10 @@ final sl = GetIt.instance;
 Future<void> setupLocator() async {
   await Hive.initFlutter();
 
+   //APP NETWORK SERVICE
+
+  sl.registerLazySingleton<NetworkService>(() => NetworkService());
+
   final weatherBox = await Hive.openBox<dynamic>('current');
   final themeStateBox = await Hive.openBox<dynamic>('themeState');
 
@@ -28,9 +32,7 @@ Future<void> setupLocator() async {
 
   sl.registerLazySingleton(() => WeatherAppMonitorService(sl()));
 
-  //APP NETWORK SERVICE
-
-  sl.registerLazySingleton<NetworkService>(() => NetworkService());
+ 
 
   //APP REMOTE CONNECTION DIOCLIENT
   sl.registerLazySingleton<DioClient>(() => DioClient());

@@ -16,10 +16,9 @@ class MainWeatherCard extends StatelessWidget {
 
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
           alignment: Alignment.center,
-          padding: const EdgeInsets.all(20),
-
+          
           child: GlassCard(
             widget: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,5 +57,7 @@ class MainWeatherCard extends StatelessWidget {
         ),
       ],
     );
+  
+  
   }
 }

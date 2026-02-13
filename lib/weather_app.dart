@@ -12,8 +12,8 @@ import 'package:weather_app/core/storage/hive_initialize.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-  await setupLocator();
   await HiveInitialize.init();
+  await setupLocator();
  runApp(
 
  BlocProvider(
