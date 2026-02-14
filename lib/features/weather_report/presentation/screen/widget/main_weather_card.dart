@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/extension/app_theme_extension.dart';
 import 'package:weather_app/features/weather_report/data/model/weather_data_model.dart';
 import 'package:weather_app_ui_kit/weather_app_ui_kit.dart';
 
@@ -8,8 +9,6 @@ class MainWeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Use ui kit for theme
-    final theme = AppTheme.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -27,11 +26,11 @@ class MainWeatherCard extends StatelessWidget {
                 Row(
                   children: [
                     GlassCard(
-                      color: theme.weatherHighlight.withOpacity(.1),
+                      color: context.theme.weatherHighlight.withOpacity(.1),
                       borderRadius: 12,
                       widget: Padding(
                         padding: const EdgeInsets.all(1),
-                        child: Icon(Icons.device_thermostat, color: theme.weatherHighlight, size: 50,),
+                        child: Icon(Icons.device_thermostat, color: context.theme.weatherHighlight, size: 50,),
                       )),
 
                     Padding(
@@ -39,12 +38,12 @@ class MainWeatherCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Clear Sky", style: AppTypography.textTheme.labelLarge!.copyWith(color: theme.cardValue),),
+                          Text("Clear Sky", style: AppTypography.textTheme.labelLarge!.copyWith(color: context.theme.cardLabel),),
                           Text(
                             "20"
                             "°C",
                             style: AppTypography.textTheme.displayLarge!
-                                .copyWith(color: theme.cardValue),
+                                .copyWith(color: context.theme.cardValue),
                           ),
                         ],
                       ),

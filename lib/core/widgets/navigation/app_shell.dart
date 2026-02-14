@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/extension/app_theme_extension.dart';
 import 'package:weather_app/core/widgets/app_background/app_background_widget.dart';
 import 'package:weather_app/features/settings/presentation/screen/settings_root_screen.dart';
 import 'package:weather_app/features/weather_report/presentation/screen/weather_report_screen.dart';
@@ -41,7 +42,16 @@ class _AppShellState extends State<AppShell> {
         ),
       ),
       bottomNavigationBar: NavigationBar(
+        backgroundColor: context.theme.primaryBackground,
         selectedIndex: _selectedIndex,
+        labelTextStyle:  MaterialStateProperty.all(
+  TextStyle(
+    color: context.theme.primary,
+    fontSize: 14,
+  ),
+),
+        indicatorColor: context.theme.primary.withOpacity(0.15),
+        
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         onDestinationSelected: (index) {
           setState(() => _selectedIndex = index);
@@ -50,12 +60,13 @@ class _AppShellState extends State<AppShell> {
       index,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
+      
     );
         },
         
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.cloud), label: "Weather"),
-          NavigationDestination(icon: Icon(Icons.map), label: "Map"),
+        destinations:  [
+          NavigationDestination( icon: Icon(Icons.cloud , color: context.theme.cardValue,), label: "Weather"),
+          NavigationDestination(icon: Icon(Icons.settings_rounded , color: context.theme.cardValue), label: "Setting"),
         ],
       ),
     );

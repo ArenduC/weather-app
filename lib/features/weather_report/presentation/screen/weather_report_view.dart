@@ -44,7 +44,7 @@ class _WeatherReportViewState extends State<WeatherReportView> {
                       ),
 
                       HumidityCard(
-                        weatherDataModel: state.weatherReport.weatherData,
+                        weatherDataModel: state.weatherReport,
                       ),
                      
                     ],
