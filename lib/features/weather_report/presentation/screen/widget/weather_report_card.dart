@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/core/extension/app_theme_extension.dart';
 
-import 'package:weather_app/features/weather_report/domain/entities/weather_report_enitie.dart';
+import 'package:weather_app/features/weather_report/domain/entities/weather_report_entities.dart';
 import 'package:weather_app_ui_kit/weather_app_ui_kit.dart';
 
 class WeatherReportCard<T> extends StatelessWidget {
@@ -73,7 +73,7 @@ class WeatherReportCard<T> extends StatelessWidget {
                   height: 10,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: context.theme.location.withOpacity(.2),
+                    color: context.theme.location.withValues(alpha: .2),
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),

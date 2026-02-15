@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/widgets/navigation/app_shell.dart';
 import 'package:weather_app/features/settings/data/model/theme_state_model.dart';
@@ -14,14 +15,15 @@ void main() async {
   Bloc.observer = AppBlocObserver();
   await HiveInitialize.init();
   await setupLocator();
- runApp(
 
- BlocProvider(
+  
+
+  runApp(
+    BlocProvider(
       create: (_) => sl<AppSettingsCubit>()..loadSettings(),
       child: const WeatherApp(),
-    )
- );
- 
+    ),
+  );
 }
 
 class WeatherApp extends StatefulWidget {
@@ -43,7 +45,11 @@ class _WeatherAppState extends State<WeatherApp> {
     monitor.warningStream.listen((warning) {
       if (warning != null) {
         messengerKey.currentState?.showSnackBar(
-          SnackBar(content: Text(warning.message), duration: Duration(days: 1), behavior: SnackBarBehavior.floating,),
+          SnackBar(
+            content: Text(warning.message),
+            duration: Duration(days: 1),
+            behavior: SnackBarBehavior.floating,
+          ),
         );
       } else {
         messengerKey.currentState?.hideCurrentSnackBar();
@@ -53,22 +59,41 @@ class _WeatherAppState extends State<WeatherApp> {
 
   @override
   Widget build(BuildContext context) {
-      return BlocBuilder<AppSettingsCubit, AppSettingsState>(
-    builder: (context, state) {
+    return BlocBuilder<AppSettingsCubit, AppSettingsState>(
+      builder: (context, state) {
+        final themeState = state is AppSettingsLoaded
+            ? state.appSettingsModel.themeState
+            : ThemeState.dark;
 
-      final themeState = state is AppSettingsLoaded
-          ? state.appSettingsModel.themeState
-          : ThemeState.dark;
+        return AppTheme(
+          // ✅ Move here
+          tokens: themeState.tokens,
+          child: MaterialApp(
+            theme: MaterialAppTheme.light(),
+            darkTheme: MaterialAppTheme.dark(),
+            debugShowCheckedModeBanner: false,
+            scaffoldMessengerKey: messengerKey,
+                builder: (context, child) {
+      final isDark = themeState == ThemeState.dark;
 
-       return AppTheme(                     // ✅ Move here
-        tokens: themeState.tokens,
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          scaffoldMessengerKey: messengerKey,
-          home: const AppShell(),
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness:
+              isDark ? Brightness.light : Brightness.dark,
+          statusBarBrightness:
+              isDark ? Brightness.dark : Brightness.light,
         ),
+        child: child!,
       );
     },
-  );
+
+
+            
+            home: const AppShell(),
+          ),
+        );
+      },
+    );
   }
 }

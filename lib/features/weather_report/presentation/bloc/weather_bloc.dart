@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/features/weather_report/data/model/location_address_model.dart';
 import 'package:weather_app/features/weather_report/data/model/weather_report_model.dart';
+import 'package:weather_app/features/weather_report/domain/repositories/location_repository.dart';
 import 'package:weather_app/features/weather_report/domain/repositories/weather_repository.dart';
 
 part 'weather_event.dart';
@@ -8,7 +10,8 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository weatherRepository;
-  WeatherBloc(this.weatherRepository) : super(WeatherInitial()) {
+  final LocationRepository locationRepository;
+  WeatherBloc(this.weatherRepository, this.locationRepository) : super(WeatherInitial()) {
     on<FetchWeatherReport>((_getCurrentWeatherReport));
   }
 
@@ -32,8 +35,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     emit(WeatherLoading());
 
     try {
-      final weatherReport = await weatherRepository.getWeatherReport();
-      emit(WeatherLoaded(weatherReport: weatherReport));
+        final location = await locationRepository.getLocation();
+      final weatherReport = await weatherRepository.getWeatherReport(location);
+      final locationAddress = await locationRepository.getLocationAddress(location);
+      debugPrint("Location Bloc$locationAddress");
+      emit(WeatherLoaded(weatherReport: weatherReport, locationAddressModel: locationAddress));
     } catch (e) {
       emit(WeatherError(e.toString()));
     }

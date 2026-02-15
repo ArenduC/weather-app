@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/weather_report/presentation/bloc/weather_bloc.dart';
 import 'package:weather_app/features/weather_report/presentation/screen/widget/humidity_card.dart';
@@ -23,45 +24,55 @@ class _WeatherReportViewState extends State<WeatherReportView> {
   @override
   Widget build(BuildContext context) {
     //final theme = AppTheme.of(context);
-    return SafeArea(
-      child: CustomScrollView(
-        slivers: <Widget>[
-          const WeatherFlexibleSpaceBar(),
-          BlocBuilder<WeatherBloc, WeatherState>(
-            builder: (context, state) {
-              if (state is WeatherLoading) {
-                return SliverFillRemaining(
-                  child: const Center(child: CircularProgressIndicator()),
-                );
-              }
+  
+    return BlocBuilder<WeatherBloc, WeatherState>(
+      builder: (context, state) {
 
-              if (state is WeatherLoaded) {
-                return SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      MainWeatherCard(
-                        weatherDataModel: state.weatherReport.weatherData,
-                      ),
+         final isDarkTheme =
+        Theme.of(context).brightness == Brightness.dark;
 
-                      HumidityCard(
-                        weatherDataModel: state.weatherReport,
-                      ),
-                     
-                    ],
-                  ),
-                );
-              }
+    final overlayStyle = SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness:
+          isDarkTheme ? Brightness.light : Brightness.dark,
+      statusBarBrightness:
+          isDarkTheme ? Brightness.dark : Brightness.light,
+    );
 
-              if (state is WeatherError) {
-                return SliverFillRemaining(
-                  child: Center(child: Text(state.errorMessage)),
-                );
-              }
-              return SliverFillRemaining(child: const SizedBox());
-            },
-          ),
-        ],
-      ),
+    SystemChrome.setSystemUIOverlayStyle(overlayStyle);
+        return CustomScrollView(
+          slivers: <Widget>[
+            if (state is WeatherLoading)
+              SliverFillRemaining(
+                child: const Center(child: CircularProgressIndicator()),
+              ),
+    
+            if (state is WeatherLoaded) ...[
+              WeatherFlexibleSpaceBar(
+                locationAddressModel: state.locationAddressModel,
+              ),
+              SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    MainWeatherCard(
+                      weatherDataModel: state.weatherReport.weatherData,
+                    ),
+    
+                    HumidityCard(weatherDataModel: state.weatherReport),
+                  ],
+                ),
+              ),
+            ],
+    
+            if (state is WeatherError)
+              SliverFillRemaining(
+                child: Center(child: Text(state.errorMessage)),
+              ),
+    
+            SliverFillRemaining(child: const SizedBox()),
+          ],
+        );
+      },
     );
   }
 }

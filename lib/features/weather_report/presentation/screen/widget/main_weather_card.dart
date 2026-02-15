@@ -26,7 +26,7 @@ class MainWeatherCard extends StatelessWidget {
                 Row(
                   children: [
                     GlassCard(
-                      color: context.theme.weatherHighlight.withOpacity(.1),
+                      color: context.theme.weatherHighlight.withValues(alpha: .1),
                       borderRadius: 12,
                       widget: Padding(
                         padding: const EdgeInsets.all(1),
@@ -39,11 +39,23 @@ class MainWeatherCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Clear Sky", style: AppTypography.textTheme.labelLarge!.copyWith(color: context.theme.cardLabel),),
-                          Text(
-                            "20"
-                            "°C",
-                            style: AppTypography.textTheme.displayLarge!
-                                .copyWith(color: context.theme.cardValue),
+                          Row(
+                             crossAxisAlignment: CrossAxisAlignment.baseline,
+                             textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Text(
+                                 weatherDataModel!.weatherTemperature.toString()
+                              ,
+                                style: AppTypography.textTheme.displayLarge!
+                                    .copyWith(color: context.theme.cardValue),
+                              ),
+                              Text(
+                                
+                                "°C",
+                                style: AppTypography.textTheme.displayLarge!
+                                    .copyWith(color: context.theme.cardValue),
+                              ),
+                            ],
                           ),
                         ],
                       ),

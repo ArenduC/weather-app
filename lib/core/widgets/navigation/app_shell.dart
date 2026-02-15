@@ -28,10 +28,9 @@ class _AppShellState extends State<AppShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
+      extendBodyBehindAppBar:false,
       body: AppBackgroundWidget(
         widget: PageView(
-         
           controller: _pageController,
           onPageChanged: (index) {
             setState(() {
@@ -44,29 +43,31 @@ class _AppShellState extends State<AppShell> {
       bottomNavigationBar: NavigationBar(
         backgroundColor: context.theme.primaryBackground,
         selectedIndex: _selectedIndex,
-        labelTextStyle:  MaterialStateProperty.all(
-  TextStyle(
-    color: context.theme.primary,
-    fontSize: 14,
-  ),
-),
-        indicatorColor: context.theme.primary.withOpacity(0.15),
-        
+        labelTextStyle: WidgetStateProperty.all(
+          TextStyle(color: context.theme.primary, fontSize: 14),
+        ),
+        indicatorColor: context.theme.primary.withValues(alpha: .15),
+
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         onDestinationSelected: (index) {
           setState(() => _selectedIndex = index);
 
-           _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-      
-    );
+          _pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
         },
-        
-        destinations:  [
-          NavigationDestination( icon: Icon(Icons.cloud , color: context.theme.cardValue,), label: "Weather"),
-          NavigationDestination(icon: Icon(Icons.settings_rounded , color: context.theme.cardValue), label: "Setting"),
+
+        destinations: [
+          NavigationDestination(
+            icon: Icon(Icons.cloud, color: context.theme.cardValue),
+            label: "Weather",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings_rounded, color: context.theme.cardValue),
+            label: "Setting",
+          ),
         ],
       ),
     );

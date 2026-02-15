@@ -10,8 +10,9 @@ final class WeatherLoading extends WeatherState{}
 final class WeatherLoaded extends WeatherState{
 
   final WeatherReportModel weatherReport;
+  final LocationAddressModel locationAddressModel;
 
-  WeatherLoaded({required this.weatherReport});
+  WeatherLoaded({required this.weatherReport, required this.locationAddressModel});
 
 }
 

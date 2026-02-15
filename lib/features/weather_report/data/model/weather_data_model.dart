@@ -2,7 +2,7 @@
 
 import 'package:hive/hive.dart';
 import 'package:weather_app/core/storage/hive_type_ids.dart';
-import 'package:weather_app/features/weather_report/domain/entities/weather_report_enitie.dart';
+import 'package:weather_app/features/weather_report/domain/entities/weather_report_entities.dart';
 part 'weather_data_model.g.dart';
 
 @HiveType(typeId: HiveTypeIds.weatherDataModel)

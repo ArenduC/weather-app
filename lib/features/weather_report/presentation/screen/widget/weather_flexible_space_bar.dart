@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weather_app/features/weather_report/data/model/location_address_model.dart';
 import 'package:weather_app_ui_kit/weather_app_ui_kit.dart';
 
 class WeatherFlexibleSpaceBar extends StatelessWidget {
-  const WeatherFlexibleSpaceBar({super.key});
+  final LocationAddressModel? locationAddressModel;
+  const WeatherFlexibleSpaceBar({super.key, this.locationAddressModel});
 
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
     return SliverAppBar(
-      expandedHeight: 300,
+      expandedHeight: 300 + MediaQuery.of(context).padding.top,
+
       backgroundColor: Colors.transparent,
+      scrolledUnderElevation: 0,
+      surfaceTintColor: Colors.transparent,
+      
+       
+      elevation: 0,
+      primary: true,
+      forceElevated: false,
+      
       pinned: true,
+
+       systemOverlayStyle: SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  
+  ),
+       
       flexibleSpace: LayoutBuilder(
         builder: (context, constraints) {
           final double maxHeight = 200;
@@ -23,6 +41,8 @@ class WeatherFlexibleSpaceBar extends StatelessWidget {
               constraints.biggest.height <=
               kToolbarHeight + MediaQuery.of(context).padding.top;
 
+             
+
           return Container(
             decoration: BoxDecoration(
               color: isScroll ? theme.primaryBackground : Colors.transparent,
@@ -30,13 +50,13 @@ class WeatherFlexibleSpaceBar extends StatelessWidget {
             child: FlexibleSpaceBar(
               titlePadding: EdgeInsets.only(left: 20),
               title: Padding(
-                padding: const EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 40),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Kolkata",
-                      style: AppTypography.textTheme.bodySmall!.copyWith(
+                      locationAddressModel!.administrativeArea.toString(),
+                      style: AppTypography.textTheme.bodyMedium!.copyWith(
                         color: theme.cardValue,
                       ),
                     ),
@@ -60,23 +80,21 @@ class WeatherFlexibleSpaceBar extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
-
+          
                           children: [
                             Text(
-                              "Kolkata",
+                              locationAddressModel!.administrativeArea,
                               style: AppTypography.textTheme.displayMedium!
                                   .copyWith(color: theme.cardValue),
                             ),
-                            Text(
-                              "India",
-                              style: AppTypography.textTheme.bodyMedium!
-                                  .copyWith(color: theme.cardValue),
-                            ),
+                            
                           ],
                         ),
                       ),
                     ),
                   ),
+                  
+                  
                   Positioned(
                     right: 220,
                     bottom: 0,
@@ -89,7 +107,7 @@ class WeatherFlexibleSpaceBar extends StatelessWidget {
                       ),
                     ),
                   ),
-
+          
                   // Clouds (medium speed)
                   Positioned(
                     left: 180,
@@ -99,12 +117,12 @@ class WeatherFlexibleSpaceBar extends StatelessWidget {
                       alignment: Alignment.bottomCenter,
                       child: SvgPicture.asset(
                         'assets/features/weather_report/sliverAsset 3.svg',
-
+          
                         height: 150,
                       ),
                     ),
                   ),
-
+          
                   // Mountains (fastest movement)
                   Positioned(
                     left: 230,
@@ -118,6 +136,36 @@ class WeatherFlexibleSpaceBar extends StatelessWidget {
                       ),
                     ),
                   ),
+          
+                   Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 100,
+                    child: Align(
+                      alignment: AlignmentGeometry.topCenter,
+                      child: Transform.scale(
+                        scale: 0.7 + (0.3 * percent),
+                        alignment: Alignment.topCenter,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+          
+                          children: [
+                            Text(
+                              locationAddressModel!.country,
+                              style: AppTypography.textTheme.bodyMedium!
+                                  .copyWith(color: theme.cardValue),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  
+                  
+          
+          
                   Positioned(
                     left: 300,
                     bottom: 0,

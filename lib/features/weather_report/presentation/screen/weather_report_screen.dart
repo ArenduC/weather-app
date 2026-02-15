@@ -9,6 +9,6 @@ class WeatherReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (_)=> WeatherBloc(sl()), child: const WeatherReportView(),);
+    return BlocProvider(create: (_)=> WeatherBloc(sl(), sl()), child: const WeatherReportView(),);
   }
 }
