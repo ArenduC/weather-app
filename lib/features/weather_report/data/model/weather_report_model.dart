@@ -5,7 +5,7 @@ import 'package:weather_app/core/storage/hive_type_ids.dart';
 import 'package:weather_app/features/weather_report/data/model/weather_data_model.dart';
 import 'package:weather_app/features/weather_report/data/model/weather_units_model.dart';
 
-part 'weather_report_model.g.dart';
+
 
 
 @HiveType(typeId: HiveTypeIds.weatherReportModel)

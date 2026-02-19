@@ -1,7 +1,7 @@
 
 import 'package:hive/hive.dart';
 import 'package:weather_app/core/storage/hive_type_ids.dart';
-part 'weather_units_model.g.dart';
+
 @HiveType(typeId: HiveTypeIds.weatherUnitModel)
 class WeatherUnitsModel {
   @HiveField(0)
@@ -14,6 +14,9 @@ class WeatherUnitsModel {
      final String weatherIsDay;
      @HiveField(5)
      final String weatherPrecipitation;
+     
+
+
 
   WeatherUnitsModel({required this.weatherTime, required this.weatherTemperature, required this.weatherRelativeHumidity, required this.weatherIsDay, required this.weatherPrecipitation});
 

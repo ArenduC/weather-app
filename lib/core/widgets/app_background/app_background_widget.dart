@@ -16,14 +16,8 @@ class AppBackgroundWidget extends StatelessWidget {
        
           Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  theme.gradientStart,
-                  theme.gradientEnd,
-                ],
-              ),
+              color: theme.gradientStart,
+             
             ),
           ),
 
@@ -47,21 +41,21 @@ class AppBackgroundWidget extends StatelessWidget {
           ),
 
           Positioned(
-            bottom: -150,
+            bottom: -400,
             right: -100,
             child: buildCircle(
-              color: theme.weatherHighlight,
-              size: 350,
+              color: theme.primaryAccent,
+              size: 600,
             ),
           ),
 
          
            BackdropFilter(
             filter: ImageFilter.blur(
-              sigmaX: 80,
-              sigmaY: 80,
+              sigmaX: 0,
+              sigmaY: 100,
             ),
-            child: Container(color: const Color.fromARGB(0, 0, 0, 0)),
+            child: Container(color: const Color.fromARGB(50, 0, 0, 0)),
           ),
 
           widget

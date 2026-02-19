@@ -9,21 +9,23 @@ class WeatherReportCard<T> extends StatelessWidget {
 
 
   final WeatherReportEntities? entities;
-   final T Function(WeatherReportEntities) valueSelector;
-  
+  final T Function(WeatherReportEntities) valueSelector;
   final String cardTitle;
   final String? unit;
   final Color iconsColor;
   final Icon icon;
+  final Widget? widget;
 
   const WeatherReportCard({
     super.key,
    
-    this.cardTitle = "Card Title",
+   
     required this.iconsColor,
     required this.icon, 
-   
-    this.entities, required this.valueSelector,
+    required this.valueSelector,
+    this.cardTitle = "Card Title",
+    this.widget,
+    this.entities, 
     this.unit,
   });
 
@@ -67,27 +69,7 @@ class WeatherReportCard<T> extends StatelessWidget {
                 ),
               ],
             ),
-            Stack(
-              children: [
-                Container(
-                  height: 10,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: context.theme.location.withValues(alpha: .2),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-
-                Container(
-                  height: 10,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: context.theme.location,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ],
-            ),
+            widget?? SizedBox(),
           ],
         ),
       ),

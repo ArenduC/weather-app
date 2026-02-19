@@ -5,6 +5,7 @@ import 'package:weather_app/features/weather_report/presentation/bloc/weather_bl
 import 'package:weather_app/features/weather_report/presentation/screen/widget/humidity_card.dart';
 import 'package:weather_app/features/weather_report/presentation/screen/widget/main_weather_card.dart';
 import 'package:weather_app/features/weather_report/presentation/screen/widget/weather_flexible_space_bar.dart';
+import 'package:weather_app/features/weather_report/presentation/screen/widget/wind_card.dart';
 
 class WeatherReportView extends StatefulWidget {
   const WeatherReportView({super.key});
@@ -59,6 +60,8 @@ class _WeatherReportViewState extends State<WeatherReportView> {
                     ),
     
                     HumidityCard(weatherDataModel: state.weatherReport),
+
+                    WindCard(weatherDataModel: state.weatherReport),
                   ],
                 ),
               ),
