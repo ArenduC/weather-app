@@ -2,6 +2,7 @@
 
 import 'package:hive/hive.dart';
 import 'package:weather_app/core/storage/hive_type_ids.dart';
+import 'package:weather_app/features/weather_report/data/model/daily_humidity_model.dart';
 import 'package:weather_app/features/weather_report/data/model/weather_data_model.dart';
 import 'package:weather_app/features/weather_report/data/model/weather_units_model.dart';
 
@@ -17,12 +18,13 @@ class WeatherReportModel {
   final WeatherDataModel  weatherData;
   @HiveField(2)
   final WeatherUnitsModel weatherUnit;
+  final List<DailyHumidityModel> dailyHumidityModel;
 
-  WeatherReportModel({required this.elevation, required this.weatherData, required this.weatherUnit});
+  WeatherReportModel({required this.elevation, required this.weatherData, required this.weatherUnit, required this.dailyHumidityModel});
 
 
   factory WeatherReportModel.fromJson(Map<String, dynamic> json){
-    return WeatherReportModel(elevation: json["elevation"], weatherData: WeatherDataModel.fromJson(json["current"]) , weatherUnit: WeatherUnitsModel.fromJson(json["current_units"]) );
+    return WeatherReportModel(dailyHumidityModel: DailyHumidityModel.modelConverter(json["daily"]),  elevation: json["elevation"], weatherData: WeatherDataModel.fromJson(json["current"]) , weatherUnit: WeatherUnitsModel.fromJson(json["current_units"]) );
   }
 
   Map<String, dynamic> toJson(){
@@ -31,6 +33,7 @@ class WeatherReportModel {
       "elevation": elevation,
       "weatherData": weatherData,
       "weatherUnit": weatherUnit,
+      "dailyHumidityModel": dailyHumidityModel,
     };
   }
 

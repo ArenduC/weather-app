@@ -48,6 +48,9 @@ dependencies:
   equatable: ^2.0.8
   geolocator: ^14.0.2
   geocoding: ^4.0.0
+  firebase_core: ^4.4.0
+  firebase_analytics: ^12.1.2
+  firebase_app_check: ^0.4.1+4
 
 
 

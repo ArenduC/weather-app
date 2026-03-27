@@ -1,17 +1,31 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/widgets/navigation/app_shell.dart';
 import 'package:weather_app/features/settings/data/model/theme_state_model.dart';
 import 'package:weather_app/features/settings/presentation/cubit/app_settings_cubit.dart';
+import 'package:weather_app/firebase_options.dart';
 import 'package:weather_app_ui_kit/weather_app_ui_kit.dart';
 import 'package:weather_app/app_bloc_observer.dart';
 import 'package:weather_app/core/di/service_locator.dart';
 import 'package:weather_app/core/security/weather_app_monitor_service.dart';
 import 'package:weather_app/core/storage/hive_initialize.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+
+await Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform  );
+
+ await FirebaseAppCheck.instance.activate(
+
+    androidProvider: AndroidProvider.debug,
+  
+  );
   Bloc.observer = AppBlocObserver();
   await HiveInitialize.init();
   await setupLocator();
